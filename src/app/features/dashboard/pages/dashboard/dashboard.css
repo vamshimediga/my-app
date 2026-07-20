@@ -1,49 +1,130 @@
-.cards{
+.employee-container {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,.08);
+    width: 100%;
+}
 
-    display:grid;
+.table-header {
+    margin-bottom: 15px;
+}
 
-    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+.table-header h2 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 600;
+}
 
-    gap:25px;
+.employee-table {
+    width: 100%;
+    table-layout: fixed; /* Fits columns within available width */
+    border-collapse: collapse;
+}
+
+.employee-table thead {
+    background: #0d6efd;
+    color: #fff;
+}
+
+.employee-table th,
+.employee-table td {
+    padding: 8px 6px;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 13px;
+    word-break: break-word; /* Wraps long text */
+}
+
+.employee-table tbody tr:hover {
+    background: #f5f9ff;
+}
+
+.employee-table th:nth-child(1) { width: 5%; }
+.employee-table th:nth-child(2) { width: 10%; }
+.employee-table th:nth-child(3) { width: 10%; }
+.employee-table th:nth-child(4) { width: 10%; }
+.employee-table th:nth-child(5) { width: 20%; }
+.employee-table th:nth-child(6) { width: 12%; }
+.employee-table th:nth-child(7) { width: 10%; }
+.employee-table th:nth-child(8) { width: 13%; }
+.employee-table th:nth-child(9) { width: 10%; }
+
+.loading-container{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    height:350px;
+}
+
+.spinner{
+    width:60px;
+    height:60px;
+    border:6px solid #e5e7eb;
+    border-top:6px solid #0d6efd;
+    border-radius:50%;
+    animation:spin .8s linear infinite;
+}
+
+.loading-container p{
+    margin-top:15px;
+    font-size:16px;
+    font-weight:600;
+    color:#0d6efd;
+}
+
+@keyframes spin{
+    from{
+        transform:rotate(0deg);
+    }
+    to{
+        transform:rotate(360deg);
+    }
+}
+
+:host {
+
+    display:block;
+
+    padding:20px;
 
 }
 
 .card{
 
-    background:white;
-
-    border-radius:15px;
-
-    padding:25px;
-
-    box-shadow:0 5px 20px rgba(0,0,0,.08);
+    border-radius:10px;
 
 }
 
-.card h1{
+.card-header{
 
-    color:#2563eb;
+    font-size:18px;
 
-    font-size:36px;
+    font-weight:600;
+
+}
+
+.p-datatable{
+
+    font-size:14px;
 
 }
 
-.content-card{
+.p-datatable th{
 
-    margin-top:30px;
-
-    background:white;
-
-    border-radius:15px;
-
-    padding:25px;
-
-    box-shadow:0 5px 20px rgba(0,0,0,.08);
+    white-space:nowrap;
 
 }
-a,
-button {
-    cursor: pointer;
+
+.p-datatable td{
+
+    white-space:nowrap;
+
 }
 
+.pi-spinner{
 
+    color:#0d6efd;
+
+}

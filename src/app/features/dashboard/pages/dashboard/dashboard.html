@@ -1,87 +1,49 @@
-<div class="cards">
+<p-table
+    #table
+    [value]="employees"
+    [paginator]="true"
+    [rows]="5"
+    [rowsPerPageOptions]="[5,10,20]"
+    [globalFilterFields]="[
+      'employeeCode',
+      'firstName',
+      'lastName',
+      'email',
+      'phone'
+    ]">
 
-    <div class="card blue">
-        <div>
-            <h5>Total Users</h5>
-            <h1>150</h1>
-        </div>
-        <span class="card-icon">👤</span>
-    </div>
+    <ng-template #header>
+        <tr>
+            <th>ID</th>
+            <th>Code</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Salary</th>
+            <th>Joining Date</th>
+            <th>Department</th>
+        </tr>
+    </ng-template>
 
-    <div class="card green">
-        <div>
-            <h5>Orders</h5>
-            <h1>86</h1>
-        </div>
-        <span class="card-icon">🛒</span>
-    </div>
+    <ng-template #body let-emp>
+        <tr>
+            <td>{{ emp.id }}</td>
+            <td>{{ emp.employeeCode }}</td>
+            <td>{{ emp.firstName }}</td>
+            <td>{{ emp.lastName }}</td>
+            <td>{{ emp.email }}</td>
+            <td>{{ emp.phone }}</td>
+            <td>{{ emp.salary }}</td>
+            <td>{{ emp.joiningDate | date:'dd/MM/yyyy' }}</td>
+            <td>{{ emp.departmentId }}</td>
+        </tr>
+    </ng-template>
 
-    <div class="card orange">
-        <div>
-            <h5>Revenue</h5>
-            <h1>₹45,000</h1>
-        </div>
-        <span class="card-icon">💰</span>
-    </div>
+    <ng-template #emptymessage>
+        <tr>
+            <td colspan="9">No Employees Found</td>
+        </tr>
+    </ng-template>
 
-    <div class="card purple">
-        <div>
-            <h5>Projects</h5>
-            <h1>18</h1>
-        </div>
-        <span class="card-icon">📊</span>
-    </div>
-
-</div>
-
-<div class="container mt-4">
-
-    <h2 class="mb-3">Employee List</h2>
-
-    <table class="table table-bordered table-striped table-hover">
-
-        <thead class="table-dark">
-            <tr>
-                <th>ID</th>
-                <th>Code</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>Salary</th>
-                <th>Joining Date</th>
-                <th>Department</th>
-            </tr>
-        </thead>
-
-        <tbody>
-
-            @for (emp of employees; track emp.id) {
-
-                <tr>
-                    <td>{{ emp.id }}</td>
-                    <td>{{ emp.employeeCode }}</td>
-                    <td>{{ emp.firstName }}</td>
-                    <td>{{ emp.lastName }}</td>
-                    <td>{{ emp.email }}</td>
-                    <td>{{ emp.phone }}</td>
-                    <td>{{ emp.salary | currency:'INR' }}</td>
-                    <td>{{ emp.joiningDate | date:'dd/MM/yyyy' }}</td>
-                    <td>{{ emp.departmentId }}</td>
-                </tr>
-
-            } @empty {
-
-                <tr>
-                    <td colspan="9" class="text-center">
-                        No employees found.
-                    </td>
-                </tr>
-
-            }
-
-        </tbody>
-
-    </table>
-
-</div>
+</p-table>
