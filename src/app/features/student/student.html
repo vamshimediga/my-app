@@ -1,0 +1,174 @@
+<div class="card shadow-sm">
+
+    <div class="card-header d-flex justify-content-between align-items-center">
+
+        <h4 class="mb-0">Student Management</h4>
+
+        <p-button
+            label="Add Student"
+            icon="pi pi-plus"
+            severity="success"
+            (onClick)="clear()">
+        </p-button>
+
+    </div>
+
+    <div class="card-body">
+
+        <form [formGroup]="studentForm">
+
+            <div class="row">
+
+                <input type="hidden" formControlName="id">
+
+                <!-- Name -->
+                <div class="col-md-3 mb-3">
+                    <label class="form-label">Name</label>
+
+                    <input
+                        pInputText
+                        class="w-100"
+                        formControlName="name"
+                        placeholder="Enter Name">
+                </div>
+
+                <!-- Age -->
+                <div class="col-md-2 mb-3">
+                    <label class="form-label">Age</label>
+
+                    <input
+                        pInputText
+                        type="number"
+                        class="w-100"
+                        formControlName="age"
+                        placeholder="Age">
+                </div>
+
+                <!-- Email -->
+                <div class="col-md-3 mb-3">
+                    <label class="form-label">Email</label>
+
+                    <input
+                        pInputText
+                        type="email"
+                        class="w-100"
+                        formControlName="email"
+                        placeholder="Email">
+                </div>
+
+                <!-- Course -->
+                <div class="col-md-2 mb-3">
+                    <label class="form-label">Course Id</label>
+
+                    <input
+                        pInputText
+                        type="number"
+                        class="w-100"
+                        formControlName="courseId"
+                        placeholder="Course Id">
+                </div>
+
+                <!-- Save Button -->
+                <div class="col-md-2 d-flex align-items-end">
+
+                    <p-button
+                        [label]="studentForm.value.id == 0 ? 'Save' : 'Update'"
+                        icon="pi pi-check"
+                        severity="primary"
+                        (onClick)="save()">
+                    </p-button>
+
+                </div>
+
+            </div>
+
+        </form>
+
+        <hr>
+
+        <p-table
+            #table
+            [value]="students"
+            [tableStyle]="{'min-width':'70rem'}"
+            [paginator]="true"
+            [rows]="5"
+            [rowsPerPageOptions]="[5,10,20]"
+            [globalFilterFields]="[
+                'name',
+                'age',
+                'email',
+                'courseId'
+            ]">
+
+            <!-- Header -->
+            <ng-template #header>
+
+                <tr>
+
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Email</th>
+                    <th>Course Id</th>
+                    <th width="180">Action</th>
+
+                </tr>
+
+            </ng-template>
+
+            <!-- Body -->
+            <ng-template #body let-student>
+
+                <tr>
+
+                    <td>{{ student.id }}</td>
+
+                    <td>{{ student.name }}</td>
+
+                    <td>{{ student.age }}</td>
+
+                    <td>{{ student.email }}</td>
+
+                    <td>{{ student.courseId }}</td>
+
+                    <td>
+
+                        <p-button
+                            icon="pi pi-pencil"
+                            severity="warn"
+                            class="me-2"
+                            (onClick)="edit(student)">
+                        </p-button>
+
+                        <p-button
+                            icon="pi pi-trash"
+                            severity="danger"
+                            (onClick)="delete(student.id)">
+                        </p-button>
+
+                    </td>
+
+                </tr>
+
+            </ng-template>
+
+            <!-- Empty -->
+            <ng-template #emptymessage>
+
+                <tr>
+
+                    <td colspan="6" class="text-center">
+
+                        No Students Found
+
+                    </td>
+
+                </tr>
+
+            </ng-template>
+
+        </p-table>
+
+    </div>
+
+</div>
