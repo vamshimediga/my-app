@@ -39,17 +39,17 @@ export class Login {
     };
 
     this.authService.login(request).subscribe({
-      next: (response: ILoginResponse) => {
+      next: (response: any) => {
 
         // Save JWT Token
-        localStorage.setItem('token', response.token);
+        localStorage.setItem('token', response.data.token);
 
         // Save User Details
-        localStorage.setItem('user', JSON.stringify(response.data));
+        // localStorage.setItem('user', JSON.stringify(response.data));
 
-        // Optional: Save additional information
-        localStorage.setItem('expiresIn', response.expiresIn.toString());
-        localStorage.setItem('role', response.data.role);
+        // // Optional: Save additional information
+        // localStorage.setItem('expiresIn', response.expiresIn.toString());
+        // localStorage.setItem('role', response.data.role);
 
         console.log('Login Successful');
         console.log(response);

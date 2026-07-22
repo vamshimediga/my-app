@@ -7,5 +7,6 @@ export class UserResponse {
   mobile!: string ;
   role!: string ;
   isActive!: boolean ;
+  PasswordHash!:string;
 
 }

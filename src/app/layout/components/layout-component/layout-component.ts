@@ -40,9 +40,9 @@ export class LayoutComponent extends BaseComponent implements OnInit {
 
         this.authService.getProfile().subscribe({
 
-            next: response => {
+            next: response => {debugger
 
-                this.user = response;
+                this.user = response["data"];
 
                 this.refresh();
 
