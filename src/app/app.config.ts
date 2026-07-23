@@ -11,10 +11,12 @@ import {
   withInterceptors
 } from '@angular/common/http';
 
-import { provideNoopAnimations } from '@angular/platform-browser/animations';
+import { provideAnimations } from '@angular/platform-browser/animations';
 
 import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeuix/themes/aura';
+
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 import { routes } from './app.routes';
 import { authInterceptor } from './core/interceptors/auth.interceptor';
@@ -31,18 +33,19 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
 
     provideHttpClient(
-      withInterceptors([
-        authInterceptor
-      ])
+      withInterceptors([authInterceptor])
     ),
 
-    provideNoopAnimations(),
+    provideAnimations(),
 
     providePrimeNG({
       theme: {
         preset: Aura
       }
-    })
+    }),
+
+    ConfirmationService,
+    MessageService
 
   ]
 };

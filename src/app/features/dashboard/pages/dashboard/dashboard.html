@@ -1,49 +1,373 @@
-<p-table
-    #table
-    [value]="employees"
-    [paginator]="true"
-    [rows]="5"
-    [rowsPerPageOptions]="[5,10,20]"
-    [globalFilterFields]="[
-      'employeeCode',
-      'firstName',
-      'lastName',
-      'email',
-      'phone'
-    ]">
+<p-toast></p-toast>
 
-    <ng-template #header>
-        <tr>
-            <th>ID</th>
-            <th>Code</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Email</th>
-            <th>Phone</th>
-            <th>Salary</th>
-            <th>Joining Date</th>
-            <th>Department</th>
-        </tr>
+<div class="card">
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+
+        <h3>Employee Management</h3>
+
+        <p-button
+            label="Add Employee"
+            icon="pi pi-plus"
+            severity="success"
+            (click)="addEmployee()">
+        </p-button>
+
+    </div>
+
+    <div class="mb-3">
+
+        <input
+            pInputText
+            class="w-100"
+            type="text"
+            placeholder="Search Employee..."
+            (input)="table.filterGlobal($any($event.target).value,'contains')">
+
+    </div>
+
+    <p-table
+        #table
+        [value]="employees"
+        [paginator]="true"
+        [rows]="5"
+        [rowsPerPageOptions]="[5,10,20]"
+        responsiveLayout="scroll"
+        [globalFilterFields]="[
+            'employeeCode',
+            'firstName',
+            'lastName',
+            'email',
+            'phone'
+        ]">
+
+        <ng-template #header>
+
+            <tr>
+
+                <th>ID</th>
+                <th>Code</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Salary</th>
+                <th>Joining Date</th>
+                <th>Department</th>
+                <th style="width:150px">Actions</th>
+
+            </tr>
+
+        </ng-template>
+
+        <ng-template #body let-emp>
+
+            <tr>
+
+                <td>{{ emp.id }}</td>
+
+                <td>{{ emp.employeeCode }}</td>
+
+                <td>{{ emp.firstName }}</td>
+
+                <td>{{ emp.lastName }}</td>
+
+                <td>{{ emp.email }}</td>
+
+                <td>{{ emp.phone }}</td>
+
+                <td>{{ emp.salary }}</td>
+
+                <td>{{ emp.joiningDate | date:'dd/MM/yyyy' }}</td>
+
+                <td>{{ getDepartmentName(emp.departmentId) }}</td>
+
+                <td>
+
+                    <p-button
+                        icon="pi pi-pencil"
+                        severity="info"
+                        [rounded]="true"
+                        [text]="true"
+                        (click)="editEmployee(emp)">
+                    </p-button>
+
+                    <p-button
+                        icon="pi pi-trash"
+                        severity="danger"
+                        [rounded]="true"
+                        [text]="true"
+                        (click)="deleteEmployee(emp)">
+                    </p-button>
+
+                </td>
+
+            </tr>
+
+        </ng-template>
+
+        <ng-template #emptymessage>
+
+            <tr>
+
+                <td colspan="10" class="text-center">
+
+                    No Employees Found
+
+                </td>
+
+            </tr>
+
+        </ng-template>
+
+    </p-table>
+
+</div>
+
+<!-- Add / Edit Employee -->
+
+<p-dialog
+    [(visible)]="displayDialog"
+    [modal]="true"
+    [style]="{width:'700px'}"
+    [header]="isEdit ? 'Update Employee' : 'Add Employee'"
+    (onHide)="hideDialog()">
+
+    <form
+        [formGroup]="employeeForm"
+        (ngSubmit)="saveEmployee()">
+
+        <div class="row">
+
+            <div class="col-md-6 mb-3">
+
+                <label>Employee Code</label>
+
+                <input
+                    pInputText
+                    class="w-100"
+                    formControlName="employeeCode">
+
+                @if(submitted && employeeForm.controls['employeeCode'].invalid){
+
+                    <small class="text-danger">
+
+                        Employee Code is required
+
+                    </small>
+
+                }
+
+            </div>
+
+            <div class="col-md-6 mb-3">
+
+                <label>First Name</label>
+
+                <input
+                    pInputText
+                    class="w-100"
+                    formControlName="firstName">
+
+                @if(submitted && employeeForm.controls['firstName'].invalid){
+
+                    <small class="text-danger">
+
+                        First Name is required
+
+                    </small>
+
+                }
+
+            </div>
+
+            <div class="col-md-6 mb-3">
+
+                <label>Last Name</label>
+
+                <input
+                    pInputText
+                    class="w-100"
+                    formControlName="lastName">
+
+            </div>
+
+            <div class="col-md-6 mb-3">
+
+                <label>Email</label>
+
+                <input
+                    pInputText
+                    class="w-100"
+                    formControlName="email">
+
+                @if(submitted && employeeForm.controls['email'].invalid){
+
+                    <small class="text-danger">
+
+                        Valid Email is required
+
+                    </small>
+
+                }
+
+            </div>
+
+            <div class="col-md-6 mb-3">
+
+                <label>Phone</label>
+
+                <input
+                    pInputText
+                    class="w-100"
+                    formControlName="phone">
+
+                @if(submitted && employeeForm.controls['phone'].invalid){
+
+                    <small class="text-danger">
+
+                        Phone is required
+
+                    </small>
+
+                }
+
+            </div>
+
+            <div class="col-md-6 mb-3">
+
+                <label>Salary</label>
+
+                <input
+                    type="number"
+                    pInputText
+                    class="w-100"
+                    formControlName="salary">
+
+                @if(submitted && employeeForm.controls['salary'].invalid){
+
+                    <small class="text-danger">
+
+                        Salary is required
+
+                    </small>
+
+                }
+
+            </div>
+
+            <div class="col-md-6 mb-3">
+
+                <label>Joining Date</label>
+
+                <input
+                    type="date"
+                    class="form-control"
+                    formControlName="joiningDate">
+
+                @if(submitted && employeeForm.controls['joiningDate'].invalid){
+
+                    <small class="text-danger">
+
+                        Joining Date is required
+
+                    </small>
+
+                }
+
+            </div>
+
+            <div class="col-md-6 mb-3">
+
+                <label>Department</label>
+
+                <p-select
+                    [options]="departments"
+                    optionLabel="name"
+                    optionValue="id"
+                    formControlName="departmentId"
+                    placeholder="Select Department"
+                    class="w-100">
+                </p-select>
+
+                @if(submitted && employeeForm.controls['departmentId'].invalid){
+
+                    <small class="text-danger">
+
+                        Department is required
+
+                    </small>
+
+                }
+
+            </div>
+
+        </div>
+
+        <div class="d-flex justify-content-end mt-3">
+
+            <p-button
+                type="button"
+                label="Cancel"
+                severity="secondary"
+                (click)="hideDialog()">
+            </p-button>
+
+            &nbsp;
+
+            <p-button
+                type="submit"
+                [label]="isEdit ? 'Update' : 'Save'">
+            </p-button>
+
+        </div>
+
+    </form>
+
+</p-dialog>
+
+<!-- Delete Confirmation -->
+
+<p-dialog
+    header="Delete Confirmation"
+    [(visible)]="confirmDeleteDialog"
+    [modal]="true"
+    [closable]="false"
+    [style]="{ width:'400px' }">
+
+    <div class="text-center">
+
+        <i
+            class="pi pi-exclamation-triangle"
+            style="font-size:3rem;color:#f59e0b;">
+        </i>
+
+        <h5 class="mt-3">
+
+            Are you sure you want to delete
+
+            <strong>{{ selectedEmployee?.firstName }}</strong>?
+
+        </h5>
+
+    </div>
+
+    <ng-template #footer>
+
+        <p-button
+            label="No"
+            severity="secondary"
+            (click)="confirmDeleteDialog=false">
+        </p-button>
+
+        &nbsp;
+
+        <p-button
+            label="Yes"
+            severity="danger"
+            (click)="deleteEmployeeConfirmed()">
+        </p-button>
+
     </ng-template>
 
-    <ng-template #body let-emp>
-        <tr>
-            <td>{{ emp.id }}</td>
-            <td>{{ emp.employeeCode }}</td>
-            <td>{{ emp.firstName }}</td>
-            <td>{{ emp.lastName }}</td>
-            <td>{{ emp.email }}</td>
-            <td>{{ emp.phone }}</td>
-            <td>{{ emp.salary }}</td>
-            <td>{{ emp.joiningDate | date:'dd/MM/yyyy' }}</td>
-            <td>{{ emp.departmentId }}</td>
-        </tr>
-    </ng-template>
-
-    <ng-template #emptymessage>
-        <tr>
-            <td colspan="9">No Employees Found</td>
-        </tr>
-    </ng-template>
-
-</p-table>
+</p-dialog>

@@ -1,1 +1,208 @@
-<p>orders works!</p>
+<p-toast></p-toast>
+
+
+<div class="container mt-4">
+
+
+    <div class="card p-4">
+
+
+        <h3>File Upload</h3>
+
+
+        <input
+            type="file"
+            class="form-control mb-3"
+            (change)="onFileChange($event)">
+
+
+
+        <button
+            class="btn btn-primary me-2"
+            (click)="upload()">
+
+            Upload
+
+        </button>
+
+
+
+        <hr>
+
+
+
+        <h5>Uploaded File Path</h5>
+
+
+        <p>{{ uploadedPath }}</p>
+
+
+    </div>
+
+
+
+
+    <div class="card mt-4 p-4">
+
+
+        <h3>Uploaded Files</h3>
+
+
+
+        <table class="table table-bordered">
+
+
+            <thead class="table-dark">
+
+
+                <tr>
+
+                    <th>
+                        File Name
+                    </th>
+
+
+                    <th>
+                        Size
+                    </th>
+
+
+                    <th>
+                        Content Type
+                    </th>
+
+
+                    <th>
+                        Uploaded Date
+                    </th>
+
+
+                    <th>
+                        Action
+                    </th>
+
+
+                </tr>
+
+
+            </thead>
+
+
+
+
+            <tbody>
+
+
+                <tr *ngFor="let file of files">
+
+
+
+                    <td>
+
+
+                        <a href="javascript:void(0)"
+                           class="text-primary"
+                           style="cursor:pointer"
+                           (click)="download(file.storedFileName)">
+
+                            {{ file.fileName }}
+
+                        </a>
+
+
+                    </td>
+
+
+
+
+
+                    <td>
+
+                        {{ file.fileSize / 1024 | number:'1.2-2' }} KB
+
+                    </td>
+
+
+
+
+
+                    <td>
+
+                        {{ file.contentType }}
+
+                    </td>
+
+
+
+
+
+                    <td>
+
+                        {{ file.uploadedOn | date:'dd-MM-yyyy HH:mm' }}
+
+                    </td>
+
+
+
+
+
+                    <td>
+
+
+                        <button
+                            class="btn btn-success btn-sm me-2"
+                            (click)="download(file.storedFileName)">
+
+                            <i class="pi pi-download"></i>
+                            Download
+
+                        </button>
+
+
+
+
+
+                        <button
+                            class="btn btn-danger btn-sm"
+                            (click)="delete(file.storedFileName)">
+
+                            <i class="pi pi-trash"></i>
+                            Delete
+
+                        </button>
+
+
+                    </td>
+
+
+
+                </tr>
+
+
+
+                <tr *ngIf="files.length === 0">
+
+
+                    <td colspan="5" class="text-center">
+
+                        No files uploaded
+
+                    </td>
+
+
+                </tr>
+
+
+
+            </tbody>
+
+
+
+        </table>
+
+
+
+    </div>
+
+
+</div>
