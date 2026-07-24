@@ -53,11 +53,34 @@ export class LayoutComponent extends BaseComponent implements OnInit {
     }
   logout(): void {
 
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
+    const refreshToken = localStorage.getItem('refreshToken');
 
-    this.router.navigate(['/login']);
+    if (!refreshToken) {
 
+      this.router.navigate(['/login']);
+
+      return;
+    }
+
+    this.authService.logout(refreshToken).subscribe({
+
+      next: () => {
+
+        localStorage.removeItem('token');
+        localStorage.removeItem('refreshToken');
+
+        this.router.navigate(['/login']);
+      },
+
+      error: () => {
+
+        localStorage.removeItem('token');
+        localStorage.removeItem('refreshToken');
+
+        this.router.navigate(['/login']);
+      }
+
+    });
   }
 
 }

@@ -40,10 +40,10 @@ export class Login {
 
     this.authService.login(request).subscribe({
       next: (response: any) => {
-
+debugger
         // Save JWT Token
-        localStorage.setItem('token', response.data.token);
-
+        localStorage.setItem('token', response.data.accessToken);
+        localStorage.setItem('refreshToken', response.data.refreshToken);
         // Save User Details
         // localStorage.setItem('user', JSON.stringify(response.data));
 

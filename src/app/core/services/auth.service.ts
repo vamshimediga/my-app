@@ -23,4 +23,9 @@ export class AuthService {
  getProfile() {
   return this.http.get<ApiResponse<UserResponse>>(`${environment.apiUrl}/api/Auth/profile`);
 }
+logout(refreshToken: string): Observable<any> {
+    return this.http.post(`${environment.apiUrl}/api/Auth/logout`, {
+      refreshToken: refreshToken
+    });
+  }
 }
