@@ -9,49 +9,63 @@
 
         <nav class="nav-menu">
 
-            <a routerLink="/dashboard"
-               routerLinkActive="active"
-               [routerLinkActiveOptions]="{ exact: true }"
-               class="nav-item">
+            <a routerLink="/dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+                class="nav-item">
                 <span>🏠</span>
                 <span>Dashboard</span>
             </a>
 
-            <a routerLink="/users"
-               routerLinkActive="active"
-               class="nav-item">
+            <a routerLink="/users" routerLinkActive="active" class="nav-item">
                 <span>👤</span>
                 <span>Users</span>
             </a>
 
-            <a routerLink="/products"
-               routerLinkActive="active"
-               class="nav-item">
+            <a routerLink="/products" routerLinkActive="active" class="nav-item">
                 <span>📦</span>
                 <span>Products</span>
             </a>
 
-            <a routerLink="/orders"
-               routerLinkActive="active"
-               class="nav-item">
+            <a routerLink="/orders" routerLinkActive="active" class="nav-item">
                 <span>📑</span>
                 <span>Orders</span>
             </a>
 
-            <a routerLink="/reports"
-               routerLinkActive="active"
-               class="nav-item">
+            <a routerLink="/reports" routerLinkActive="active" class="nav-item">
                 <span>📊</span>
                 <span>Reports</span>
             </a>
 
-            <a routerLink="/settings"
-               routerLinkActive="active"
-               class="nav-item">
+            <a routerLink="/settings" routerLinkActive="active" class="nav-item">
                 <span>⚙️</span>
                 <span>Settings</span>
             </a>
+            <a routerLink="/customer" routerLinkActive="active" class="nav-item">
 
+                <span>
+                    <i class="pi pi-user"></i>
+                </span>
+
+                <span>Customer</span>
+
+            </a>
+            <a routerLink="/designation" routerLinkActive="active" class="nav-item">
+
+                <span>
+                    <i class="pi pi-user"></i>
+                </span>
+
+                <span>Designation</span>
+
+            </a>
+            <a routerLink="/goodservices" routerLinkActive="active" class="nav-item">
+
+                <span>
+                    <i class="pi pi-user"></i>
+                </span>
+
+                <span>Goods-Services</span>
+
+            </a>
         </nav>
 
     </aside>
@@ -91,10 +105,7 @@
                 </div>
 
                 <!-- Logout -->
-                <button
-                    type="button"
-                    class="logout-btn"
-                    (click)="logout()">
+                <button type="button" class="logout-btn" (click)="logout()">
                     Logout
                 </button>
 

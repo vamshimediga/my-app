@@ -1,0 +1,304 @@
+<p-toast></p-toast>
+
+<div class="container-fluid mt-4">
+
+  <div class="card shadow-sm">
+
+    <div class="card-header">
+      <h4 class="mb-0">
+        Designation
+      </h4>
+    </div>
+
+    <div class="card-body">
+
+      <!-- ================= FORM ================= -->
+
+      <form
+        [formGroup]="designationForm"
+        (ngSubmit)="saveDesignation()"
+      >
+
+        <div class="row">
+
+          <!-- Name -->
+
+          <div class="col-md-6 mb-3">
+
+            <label class="form-label">
+              Name
+              <span class="text-danger">*</span>
+            </label>
+
+            <input
+              type="text"
+              class="form-control"
+              formControlName="name"
+              placeholder="Enter designation name"
+            >
+
+            <div
+              class="text-danger mt-1"
+              *ngIf="
+                designationForm.get('name')?.touched &&
+                designationForm.get('name')?.invalid
+              "
+            >
+              Designation name is required.
+            </div>
+
+          </div>
+
+
+          <!-- Description -->
+
+          <div class="col-md-6 mb-3">
+
+            <label class="form-label">
+              Description
+            </label>
+
+            <textarea
+              class="form-control"
+              rows="2"
+              formControlName="description"
+              placeholder="Enter description"
+            ></textarea>
+
+          </div>
+
+
+          <!-- Is Active -->
+
+          <div class="col-md-6 mb-3">
+
+            <div class="form-check mt-2">
+
+              <input
+                type="checkbox"
+                class="form-check-input"
+                id="isActive"
+                formControlName="isActive"
+              >
+
+              <label
+                class="form-check-label"
+                for="isActive"
+              >
+                Active
+              </label>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- Buttons -->
+
+        <div class="mt-3">
+
+          <button
+            type="submit"
+            class="btn btn-primary me-2"
+          >
+
+            {{ isEditMode ? 'Update' : 'Save' }}
+
+          </button>
+
+
+          <button
+            type="button"
+            class="btn btn-secondary"
+            (click)="resetForm()"
+          >
+            Clear
+          </button>
+
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+
+
+  <!-- ================= TABLE ================= -->
+
+  <div class="card shadow-sm mt-4">
+
+    <div class="card-header">
+
+      <h5 class="mb-0">
+        Designation List
+      </h5>
+
+    </div>
+
+
+    <div class="card-body">
+
+      <div class="table-responsive">
+
+        <table
+          class="table table-bordered table-hover"
+        >
+
+          <thead class="table-light">
+
+            <tr>
+
+              <th>
+                #
+              </th>
+
+              <th>
+                Name
+              </th>
+
+              <th>
+                Description
+              </th>
+
+              <th>
+                Status
+              </th>
+
+              <th>
+                Created On
+              </th>
+
+              <th>
+                Modified On
+              </th>
+
+              <th>
+                Actions
+              </th>
+
+            </tr>
+
+          </thead>
+
+
+          <tbody>
+
+            <tr
+              *ngFor="
+                let designation of designations;
+                let i = index
+              "
+            >
+
+              <td>
+                {{ i + 1 }}
+              </td>
+
+              <td>
+                {{ designation.name }}
+              </td>
+
+              <td>
+                {{ designation.description || '-' }}
+              </td>
+
+              <td>
+
+                <span
+                  class="badge"
+                  [class.bg-success]="designation.isActive"
+                  [class.bg-danger]="!designation.isActive"
+                >
+
+                  {{
+                    designation.isActive
+                      ? 'Active'
+                      : 'Inactive'
+                  }}
+
+                </span>
+
+              </td>
+
+              <td>
+                {{ designation.createdOn | date:'dd/MM/yyyy HH:mm' }}
+              </td>
+
+              <td>
+                {{
+                  designation.modifiedOn
+                    ? (designation.modifiedOn | date:'dd/MM/yyyy HH:mm')
+                    : '-'
+                }}
+              </td>
+
+              <td>
+
+                <button
+                  type="button"
+                  class="btn btn-sm btn-primary me-2"
+                  (click)="editDesignation(designation)"
+                >
+                  Edit
+                </button>
+
+
+                <button
+                  type="button"
+                  class="btn btn-sm btn-danger"
+                  (click)="deleteDesignation(designation.id)"
+                >
+                  Delete
+                </button>
+
+              </td>
+
+            </tr>
+
+
+            <!-- No Data -->
+
+            <tr
+              *ngIf="
+                !loading &&
+                designations.length === 0
+              "
+            >
+
+              <td
+                colspan="7"
+                class="text-center"
+              >
+                No designations found.
+              </td>
+
+            </tr>
+
+
+            <!-- Loading -->
+
+            <tr *ngIf="loading">
+
+              <td
+                colspan="7"
+                class="text-center"
+              >
+                Loading...
+              </td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

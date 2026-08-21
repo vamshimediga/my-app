@@ -1,0 +1,38 @@
+.card{
+    border-radius:12px;
+}
+
+.card-header{
+    font-size:18px;
+    font-weight:600;
+}
+
+.table th{
+    text-align:center;
+    vertical-align:middle;
+}
+
+.table td{
+    vertical-align:middle;
+}
+
+.badge{
+    font-size:13px;
+    padding:8px;
+}
+
+input{
+    border-radius:8px;
+}
+
+.btn{
+    border-radius:8px;
+}
+
+.card-body{
+    background:#fafafa;
+}
+
+.card:hover{
+    box-shadow:0 8px 20px rgba(0,0,0,.12);
+}

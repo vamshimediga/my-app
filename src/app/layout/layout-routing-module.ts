@@ -56,6 +56,26 @@ const routes: Routes = [
         loadChildren: () =>
           import('../features/settings/settings.module')
             .then(m => m.SettingsModule)
+      },
+      {
+        path: 'customer',
+        loadChildren: () =>
+          import('../features/customer/customer.module')
+            .then(m => m.CustomerModule)
+      },
+      {
+        path: 'designation',
+        loadComponent: () =>
+        import(
+      '../features/customer/Components/designation/designation'
+       ).then( m => m.DesignationComponent)
+      },
+      {
+        path: 'goodservices',
+        loadChildren: () =>
+        import(
+      '../features/goods-service/goods-service.module'
+       ).then( m => m.GoodsServiceModule)
       }
     ]
   }
